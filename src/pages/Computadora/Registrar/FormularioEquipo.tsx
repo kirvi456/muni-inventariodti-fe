@@ -37,7 +37,7 @@ export const FormularioEquipo = ({equipo, setEquipo} : {equipo: Computadora, set
                 </Typography> 
 
                 <SedesSelect 
-                    value={equipo.ubicacion}
+                    value={equipo.ubicacion?._id || ''}
                     onChange={ handleChange }
                     name='ubicacion'
                     label='Ubicación'
@@ -46,7 +46,7 @@ export const FormularioEquipo = ({equipo, setEquipo} : {equipo: Computadora, set
                 />
 
                 <UnidadesSelect 
-                    value={equipo.unidad}
+                    value={equipo.unidad?._id || ''}
                     onChange={ handleChange }
                     name='unidad'
                     label='Unidad/Dirección'

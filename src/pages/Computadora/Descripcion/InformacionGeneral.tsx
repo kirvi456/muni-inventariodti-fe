@@ -1,12 +1,12 @@
 import { Typography, Stack, Grid, Paper } from '@mui/material'
 import React from 'react'
-import { ComputadoraExtendida } from '../../../models/Computadora'
+import { Computadora } from '../../../models/Computadora'
 import PersonIcon from '@mui/icons-material/Person';
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import LanIcon from '@mui/icons-material/Lan';
 
 
-export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc}) => {
+export const InformacionGeneral  : React.FC<{pc: Computadora}> = ({pc}) => {
     return (
         <Grid container spacing={2}>
 
@@ -32,7 +32,7 @@ export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc})
                             <strong>Nombre: </strong> { pc.responsable.nombre }
                         </Typography>
                         <Typography>
-                            <strong>Dirección/Unidad: </strong> { pc.unidad.nombre }
+                            <strong>Dirección/Unidad: </strong> { pc.unidad!.nombre }
                         </Typography>
                         <Typography>
                             <strong>Puesto: </strong> { pc.responsable.puesto }
@@ -82,7 +82,7 @@ export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc})
                             <strong>Almacenamiento: </strong>
                         </Typography>
                         {
-                            pc.almacenamiento.map( (almacenamiento, index) => (
+                            pc.almacenamiento.map( (almacenamiento : string, index : number) => (
                                 <Typography sx={{ pl: '1em' }} key={'almacenamiento' + index}>
                                     - { almacenamiento }
                                 </Typography>
@@ -92,7 +92,7 @@ export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc})
                             <strong>RAM: </strong>
                         </Typography>
                         {
-                            pc.RAM.map( (ram, index) => (
+                            pc.RAM.map( (ram : string, index : number) => (
                                 <Typography sx={{ pl: '1em' }} key={'ram' + index}>
                                     - { ram }
                                 </Typography>
@@ -105,7 +105,7 @@ export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc})
                             <strong>Video: </strong> 
                         </Typography>
                         {
-                            pc.video.map( (video, index) => (
+                            pc.video.map( (video : string, index : number) => (
                                 <Typography sx={{ pl: '1em' }} key={'video' + index}>
                                     - { video }
                                 </Typography>
@@ -124,7 +124,7 @@ export const InformacionGeneral  : React.FC<{pc: ComputadoraExtendida}> = ({pc})
                             <strong>Otros Periféricos: </strong> 
                         </Typography>
                         {
-                            pc.otrosPerifericos.map( (periferico, index) => (
+                            pc.otrosPerifericos.map( (periferico : string, index : number) => (
                                 <Typography sx={{ pl: '1em' }} key={'periferico' +  index}>
                                     - { periferico }
                                 </Typography>

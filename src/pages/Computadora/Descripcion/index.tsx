@@ -1,23 +1,28 @@
 import React, { useState, useContext } from 'react'
 import { Container, Stack } from '@mui/material'
-import { ComputadoraExtendida } from '../../../models/Computadora';
+import { Computadora } from '../../../models/Computadora';
 import { PCHeader } from './PCHeder';
 import { PCEtiqueta } from './PCEtiqueta';
 import { PCOptionShow } from './PCOptionShow';
 import { InformacionGeneral } from './InformacionGeneral';
 import { ActividadesList } from './ActividadesList';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useFetch from '../../../hooks/useFetch';
 import { URLSContext } from '../../../context/URLs.context';
 import { NotFound } from './NotFound';
+import { EquipoSkeleton } from './Skeleton';
+import queryString from 'query-string';
+
 
 type SelectionOptions = 'info' | 'actividades';
 
 export const PCDescriptionPage = () => {
 
+
     const URLS = useContext( URLSContext )
 
-    const { id } = useParams();
+    const location = useLocation();
+    const { equipoid = ''} = queryString.parse( location.search );
 
 
     const [option, setOption] = useState<SelectionOptions>('info');
@@ -30,10 +35,10 @@ export const PCDescriptionPage = () => {
         setOption(option);
     };
 
-    const { data, error } = useFetch<ComputadoraExtendida>(`${URLS.computadoras}/${id}`)
+    const { data, error } = useFetch<Computadora>(`${URLS.computadoras}/${equipoid}`)
     
-    if (error) return <NotFound></NotFound>
-    if (!data) return <p>Loading...</p>
+    if (error) return ( <NotFound /> )
+    if (!data) return ( <EquipoSkeleton />)
 
     return (
         <Container>
@@ -45,7 +50,7 @@ export const PCDescriptionPage = () => {
 
                 <PCHeader
                     pc={data}
-                    url={URLS.computadoras + '/imagen/' + id}
+                    url={URLS.computadoras + '/imagen/' + equipoid}
                 />
 
                 <PCOptionShow 

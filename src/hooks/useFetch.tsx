@@ -65,6 +65,7 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
             }
         }
 
+        console.log('fetch')
         void fetchData()
 
         // Use the cleanup function for avoiding a possibly...

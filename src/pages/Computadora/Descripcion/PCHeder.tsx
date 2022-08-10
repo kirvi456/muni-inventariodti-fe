@@ -1,10 +1,10 @@
 import { Grid, Typography, Stack, Divider } from '@mui/material'
 import React from 'react'
-import { ComputadoraExtendida } from '../../../models/Computadora'
+import { Computadora } from '../../../models/Computadora'
 
 
 
-export const PCHeader : React.FC<{pc: ComputadoraExtendida, url : string}> = ({pc, url}) => {
+export const PCHeader : React.FC<{pc: Computadora, url : string}> = ({pc, url}) => {
 
 
     return (
@@ -35,7 +35,7 @@ export const PCHeader : React.FC<{pc: ComputadoraExtendida, url : string}> = ({p
                     </Stack>
                     <Stack direction='row' spacing={1} justifyContent='center'>
                         <Typography fontWeight='bold'>Ubicación:</Typography>
-                        <Typography>{ pc.ubicacion.nombre }</Typography>
+                        <Typography>{ pc.ubicacion!.nombre }</Typography>
                     </Stack>
                     <Stack direction='row' spacing={1} justifyContent='center'>
                         <Typography fontWeight='bold'>Código de Equipo:</Typography>

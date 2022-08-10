@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import { ComputadoraExtendida } from '../../../models/Computadora'
+import { Computadora } from '../../../models/Computadora'
 
-export const PCEtiqueta : React.FC<{pc: ComputadoraExtendida}> = ({pc}) => {
+export const PCEtiqueta : React.FC<{pc: Computadora}> = ({pc}) => {
   return (
     <Box 
         bgcolor='primary.main'
@@ -16,7 +16,7 @@ export const PCEtiqueta : React.FC<{pc: ComputadoraExtendida}> = ({pc}) => {
         <Typography 
             variant='h4' 
             fontWeight='bold'
-        >{ pc.unidad.abreviatura }</Typography>
+        >{ pc.unidad!.abreviatura }</Typography>
     </Box>
   )
 }

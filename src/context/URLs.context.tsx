@@ -8,37 +8,21 @@ type URLSList = {
     computadoras: string;
 }
 
-type URLSType = {
-    dev: URLSList;
-    prod: URLSList;
+
+const myURLS : URLSList = {
+    auth:           `${process.env.REACT_APP_BASE_URL}api/auth`,
+    usuario:        `${process.env.REACT_APP_BASE_URL}api/usuarios`,
+    sedes:          `${process.env.REACT_APP_BASE_URL}api/sedes`,
+    unidades:       `${process.env.REACT_APP_BASE_URL}api/unidades`,
+    computadoras:   `${process.env.REACT_APP_BASE_URL}api/PCS`,
 }
 
-const myURLS : URLSType = {
-    dev: {
-        auth: 'https://192.168.0.105:8000/api/auth',
-        usuario: 'https://192.168.0.105:8000/api/usuarios',
-        sedes: 'https://192.168.0.105:8000/api/sedes',
-        unidades: 'https://192.168.0.105:8000/api/unidades',
-        computadoras: 'https://192.168.0.105:8000/api/PCS',
-    },
-    prod: {
-        auth: '',
-        usuario: '',
-        sedes: '',
-        unidades: '',
-        computadoras: '',
-    }
-}
 
-const currentURLS = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-? myURLS.dev
-: myURLS.prod;
-
-export const URLSContext = React.createContext<URLSList >(currentURLS);
+export const URLSContext = React.createContext<URLSList >(myURLS);
 
 export const URLSProvider : React.FC<{children : JSX.Element}> = ({children}) => {
 
-    const value = currentURLS;
+    const value = myURLS;
 
     return (
         <URLSContext.Provider value={value}>

@@ -15,6 +15,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@zxing/browser": "^0.1.1",
+    "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
@@ -25,7 +26,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "starthttps": "set HTTPS=true&&set SSL_CRT_FILE=C:\\Windows\\System32\\localhost+2.pem&&set SSL_KEY_FILE=C:\\Windows\\System32\\localhost+2-key.pem&&react-scripts start",
+    "starthttpswindows": "set HTTPS=true&&set SSL_CRT_FILE=C:\\Windows\\System32\\localhost+2.pem&&set SSL_KEY_FILE=C:\\Windows\\System32\\localhost+2-key.pem&&react-scripts start",
+    "starthttps2": "set HTTPS=true&&set SSL_CRT_FILE=/home/kirvi/Documents/cert/CA/localhost/localhost.crt&&set SSL_KEY_FILE=/home/kirvi/Documents/cert/CA/localhost/localhost.decrypted.key&&react-scripts start",
+    "starthttps": "HTTPS=true SSL_CRT_FILE=/home/kirvi/192.168.0.105.pem SSL_KEY_FILE=/home/kirvi/192.168.0.105-key.pem npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

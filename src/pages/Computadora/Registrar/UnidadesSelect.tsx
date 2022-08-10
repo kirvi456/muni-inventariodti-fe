@@ -31,7 +31,7 @@ export const UnidadesSelect = (props : TextFieldProps) => {
 
     return (
         <TextField
-            select
+            select={ items.length > 0}
             {...props}
         >
             {

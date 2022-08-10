@@ -13,9 +13,11 @@ import { Computadora, emptyComputadora } from '../../../models/Computadora';
 import { FormularioPersona }  from './FormularioPersona';
 import { FormularioEquipo }  from './FormularioEquipo';
 import { FormularioRed }  from './FormularioRed';
+import { Stack } from '@mui/material';
+import { FormularioGuardar } from './FormularioGuardar';
 
 
-const steps = ['Información Personal', 'Información Equipo', 'Configuracion Red'];
+const steps = ['Información Personal', 'Información Equipo', 'Configuracion Red', 'QR'];
 
 export default function StepperForm() {
     
@@ -50,22 +52,31 @@ export default function StepperForm() {
                     {activeStep === 0 && <FormularioPersona equipo={equipo} setEquipo={setEquipo} />}                
                     {activeStep === 1 && <FormularioEquipo equipo={equipo} setEquipo={setEquipo} />}                
                     {activeStep === 2 && <FormularioRed equipo={equipo} setEquipo={setEquipo} />}
+                    {activeStep === 3 && <FormularioGuardar equipo={equipo} />}
 
+                    {
+                        activeStep < 3 &&
+                        <Box>
+                            <Stack direction='row' justifyContent='end'>
+                                <Button
+                                    color="inherit"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    sx={{ mr: 1 }}
+                                >
+                                    Anterior
+                                </Button>            
+                                <Button 
+                                    onClick={handleNext}
+                                    disabled={ activeStep === 3 }
+                                >
+                                    { activeStep === 2 ? 'Finalizar' : 'Siguiente' }
+                                </Button>
+                                <Button onClick={() => console.log(JSON.stringify(equipo))} >imprimir</Button>
+                            </Stack>
 
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'end' }}>
-                        <Button
-                            color="inherit"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{ mr: 1 }}
-                        >
-                            Anterior
-                        </Button>            
-                        <Button onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
-                        </Button>
-                        <Button onClick={() => console.log(JSON.stringify(equipo))} >imprimir</Button>
-                    </Box>
+                        </Box>
+                    }
             
         </Box>
     </Paper>

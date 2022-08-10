@@ -8,6 +8,7 @@ import { Usuario } from '../../models/Usuario';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../hooks/useNotification';
 import { PasswordInput } from '../../components/PasswordInput';
+import { login } from '../../services/login';
 
 
 export const LoginPage : React.FC<{}> = () => {
@@ -21,15 +22,15 @@ export const LoginPage : React.FC<{}> = () => {
     const [password, setPassword] = useState<string>('');
 
     const loguearse = () => {
+
         ValidateLoginForm.validate({user, password})
         .then(async () => {
-            const loginResponse = await FetchRequest<{usuarioInstancia: Usuario, token : string}>(
-                `${URLS.auth}/login`,
-                'POST',
-                {usuario: user, pw: password}   
-            );
 
-            navigate('/');
+            const loginResponse = await login(`${URLS.auth}/login`,user, password);
+
+            if( loginResponse.response ) return navigate('/');
+
+            openErrorNotification( loginResponse.message ?? '[ERROR]: Contacte con el admin. (lg1)');
 
         })
         .catch((error) => {

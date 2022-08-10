@@ -6,8 +6,8 @@ export interface Computadora {
     imgCodigoBarras: string,
     nombreEquipo: string,
     img: string,
-    unidad: string,
-    ubicacion: string, //palacio, santa ines, etc
+    unidad? : { _id: string, nombre: string, abreviatura: string },
+    ubicacion? : { _id: string, nombre: string },
     activo: boolean,
     responsable : Responsable,
     tipo: 'Desktop' | 'Laptop' | 'All In One',
@@ -44,8 +44,8 @@ export const emptyComputadora : Computadora = {
     imgCodigoBarras: '',
     nombreEquipo: '',
     img: '',
-    unidad: '',
-    ubicacion: '', //palacio, santa ines, etc
+    unidad: undefined,
+    ubicacion : undefined,
     activo: true,
     responsable : {
         nombre: '',
@@ -79,103 +79,60 @@ export const emptyComputadora : Computadora = {
     usuarioCreo: ''
 }
 
-export type ComputadoraExtendida = Omit<Computadora, 'ubicacion' | 'unidad'> 
-& {ubicacion : { nombre: string }}
-& { unidad : { nombre: string, abreviatura: string }}; 
+// export type ComputadoraExtendida = Omit<Computadora, 'ubicacion' | 'unidad'> 
+// & { ubicacion : { _id: string, nombre: string } }
+// & { unidad : { _id: string, nombre: string, abreviatura: string }}; 
 
-export const emptyComputadoraExtendida : ComputadoraExtendida = 
-{
-    _id: 'jfkl4jfdklsaj3jkd',
-	ID:"",  
-	imgCodigoBarras:"",
-	nombreEquipo:"DIRECTORDTI",
-	img:"https://www.max.com.gt/media/catalog/product/cache/40cff66e483d5074b1ae49efef994171/h/p/hp24df1501la_3.jpg",
-	unidad:{
-        nombre: 'Direccion de Tecnologia de la Informacion',
-        abreviatura: 'DTI'
-    },
-    activo: true,
-	ubicacion: {
-        nombre: 'Palacion Municipal'
-    },
-	responsable:{
-		"nombre":"Bryan Otoniel Ordoñez Morales",
-		"puesto":"Director",
-		"telefono":"50196697"
-	},
-	tipo:"Desktop",
-	SO:"Windows",
-	SODesc:"Windows 10 Professional",
-	SOoriginal:false,
-	ofimaticaDesc:"Microsoft Office 2019",
-	ofimaticaOriginal:true,
-	almacenamiento:["HDD 1TB Kingstom"],
-	RAM:["2GB DDR3 1666hz","2GB DDR3 1666hz"],
-	procesador:"Intel Core i3-5560k",
-	video:["Intel Graphics"],
-	marcaMonitor:"HP",
-	serieMonitor:"S/S",
-	tamMonitor:12,
-	teclado:"HP negro integrado",
-	mouse:"Negro generico",
-	otrosPerifericos:[
-		"MousePad integrado funcional",
-		"Bocinas Brocs"
-	],
-	ups:true,
-	upsDesc:"Ups Brocs 12 va",
-	internet:true,
-	interfazInternet:"Cable",
-	ip:"192.168.0.105",
-	mac:"H7:12:JF:45:J5:K7",
-	permisos:"Sin bloqueos",
-    creadoFecha: 0,
-    usuarioCreo: 'fsfds'
-};
-
-
+// export const emptyComputadoraExtendida : ComputadoraExtendida = 
 // {
-//     _id : '',
-//     ID : '',
-//     imgCodigoBarras: '',
-//     nombreEquipo: '',
-//     img: '',
-//     unidad: {
-//         nombre: '',
-//         abreviatura: ''
+//     _id: 'jfkl4jfdklsaj3jkd',
+// 	ID:"",  
+// 	imgCodigoBarras:"",
+// 	nombreEquipo:"DIRECTORDTI",
+// 	img:"https://www.max.com.gt/media/catalog/product/cache/40cff66e483d5074b1ae49efef994171/h/p/hp24df1501la_3.jpg",
+// 	unidad:{
+//         _id:'',
+//         nombre: 'Direccion de Tecnologia de la Informacion',
+//         abreviatura: 'DTI'
 //     },
-//     ubicacion: {
-//         nombre: ''
-//     }, //palacio, santa ines, etc
 //     activo: true,
-//     responsable : {
-//         nombre: '',
-//         puesto: '',
-//         telefono: ''
+// 	ubicacion: {
+//         _id:'',
+//         nombre: 'Palacio Municipal'
 //     },
-//     tipo: 'Desktop',
-//     SO: 'Windows' ,
-//     SODesc: '',
-//     SOoriginal: false,
-//     ofimaticaDesc: '',
-//     ofimaticaOriginal: false,
-//     almacenamiento: [],
-//     RAM: [],
-//     procesador: '',
-//     video: [],
-//     marcaMonitor: '',
-//     serieMonitor: '',
-//     tamMonitor: 12,
-//     teclado: '',
-//     mouse: '',
-//     otrosPerifericos: [],
-//     ups: false,
-//     upsDesc: '',
-//     internet: false,
-//     interfazInternet: 'Cable',
-//     ip: '192.168.0.',
-//     mac: '',
-//     permisos: '',
+// 	responsable:{
+// 		"nombre":"Bryan Otoniel Ordoñez Morales",
+// 		"puesto":"Director",
+// 		"telefono":"50196697"
+// 	},
+// 	tipo:"Desktop",
+// 	SO:"Windows",
+// 	SODesc:"Windows 10 Professional",
+// 	SOoriginal:false,
+// 	ofimaticaDesc:"Microsoft Office 2019",
+// 	ofimaticaOriginal:true,
+// 	almacenamiento:["HDD 1TB Kingstom"],
+// 	RAM:["2GB DDR3 1666hz","2GB DDR3 1666hz"],
+// 	procesador:"Intel Core i3-5560k",
+// 	video:["Intel Graphics"],
+// 	marcaMonitor:"HP",
+// 	serieMonitor:"S/S",
+// 	tamMonitor:12,
+// 	teclado:"HP negro integrado",
+// 	mouse:"Negro generico",
+// 	otrosPerifericos:[
+// 		"MousePad integrado funcional",
+// 		"Bocinas Brocs"
+// 	],
+// 	ups:true,
+// 	upsDesc:"Ups Brocs 12 va",
+// 	internet:true,
+// 	interfazInternet:"Cable",
+// 	ip:"192.168.0.105",
+// 	mac:"H7:12:JF:45:J5:K7",
+// 	permisos:"Sin bloqueos",
 //     creadoFecha: 0,
-//     usuarioCreo: ''
-// }
+//     usuarioCreo: 'fsfds'
+// };
+
+

@@ -1,5 +1,6 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { isPrefixUnaryExpression } from 'typescript';
 import { URLSContext } from '../../../context/URLs.context';
 import { FetchRequest } from '../../../utils/MakeRequest';
 
@@ -28,15 +29,20 @@ export const SedesSelect = (props : TextFieldProps) => {
         
     }, [URLS.sedes])
     
+    
 
     return (
         <TextField
-            select
+            select={items.length > 0}
+            value = {props.value || ''}
             {...props}
         >
             {
                 items.map( sede => (
-                    <MenuItem key={sede._id} value={sede._id}>{sede.nombre}</MenuItem>
+                    <MenuItem 
+                        key={sede._id} 
+                        value={sede._id}
+                    >{sede.nombre}</MenuItem>
                 ))
             }
         </TextField>
