@@ -1,12 +1,6 @@
-import React, { useState, useContext } from 'react'
-import { Box, Container, Stack, Paper, TextField, Typography, Divider, FormControlLabel, MenuItem, Switch, Button, Grid} from '@mui/material'
+import React from 'react'
+import { Stack, Paper, Button, Grid} from '@mui/material'
 import { Computadora } from '../../../models/Computadora';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../../hooks/useFetch';
-import { URLSContext } from '../../../context/URLs.context';
-import { StringList } from '../../../components';
-import { SedesSelect } from '../Registrar/SedesSelect';
-import { UnidadesSelect } from '../Registrar/UnidadesSelect';
 import { FormularioPersona } from '../Registrar/FormularioPersona';
 import { FormularioEquipo } from '../Registrar/FormularioEquipo';
 import { FormularioRed } from '../Registrar/FormularioRed';

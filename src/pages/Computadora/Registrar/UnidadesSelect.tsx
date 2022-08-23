@@ -28,6 +28,7 @@ export const UnidadesSelect = (props : TextFieldProps) => {
         
     }, [URLS.unidades])
     
+    console.log(props.value)
 
     return (
         <TextField

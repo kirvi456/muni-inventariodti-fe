@@ -1,8 +1,11 @@
-import { Stack, Button, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useNotification } from '../../../hooks/useNotification'
 import { Computadora } from '../../../models/Computadora'
 import { getQR, saveComputadora } from '../../../services/computadora/computadora'
+
+import SaveIcon from '@mui/icons-material/Save';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 type FormularioGuardarProps = {
     equipo : Computadora
@@ -12,31 +15,34 @@ export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo })
 
     const [showQR, setShowQR] = useState<boolean>(false);
     const [img, setImg] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { openErrorNotification, openSuccessNotification } = useNotification();
 
-    
-
     const guardarPC = async () => {
+        setLoading(true);
         const pc = await saveComputadora( equipo );
 
         if( !pc.response ){
             openErrorNotification( pc.message! );
+            setLoading( false );
             return ;
         }
 
         openSuccessNotification('Computadora registrada')
 
-        debugger;
+
         const resultImg = await getQR(pc.payload?._id || '')
 
 
         if( !resultImg.payload || resultImg.payload === '' ){
             openErrorNotification( '[Error]: No se generó el QR, pruebe generandolo luego.' );
+            setLoading( false );
             return;
         }
         setShowQR( true );
         setImg( resultImg.payload ?? '' )
+        setLoading( false );
     }
 
 
@@ -70,12 +76,15 @@ export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo })
                 Se debe estar seguro que este equipo no esta registrado anteriormente y que todo lo descrito
                 sea verídico.
             </Typography>
-            <Button 
+            <LoadingButton 
+                loading={loading}
                 variant='contained'
                 onClick={guardarPC}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
             > 
                 Guardar y Generar QR 
-            </Button>
+            </LoadingButton>
         </Stack>
     )
 }

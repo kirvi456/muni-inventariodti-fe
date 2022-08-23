@@ -72,7 +72,7 @@ export default function StepperForm() {
                                 >
                                     { activeStep === 2 ? 'Finalizar' : 'Siguiente' }
                                 </Button>
-                                <Button onClick={() => console.log(JSON.stringify(equipo))} >imprimir</Button>
+                                {/* <Button onClick={() => console.log(JSON.stringify(equipo))} >imprimir</Button> */}
                             </Stack>
 
                         </Box>

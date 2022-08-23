@@ -18,6 +18,7 @@ export const FormularioEquipo = ({equipo, setEquipo} : {equipo: Computadora, set
         setEquipo({...equipo});
     }
 
+
     const handleChangeBoolean = (e : React.ChangeEvent<HTMLInputElement>) => {
         equipo[e.target.name as 'activo'] = e.target.checked;
         setEquipo({...equipo});
@@ -37,7 +38,7 @@ export const FormularioEquipo = ({equipo, setEquipo} : {equipo: Computadora, set
                 </Typography> 
 
                 <SedesSelect 
-                    value={equipo.ubicacion?._id || ''}
+                    value={equipo.ubicacion ?? ''}
                     onChange={ handleChange }
                     name='ubicacion'
                     label='Ubicación'
@@ -46,7 +47,7 @@ export const FormularioEquipo = ({equipo, setEquipo} : {equipo: Computadora, set
                 />
 
                 <UnidadesSelect 
-                    value={equipo.unidad?._id || ''}
+                    value={equipo.unidad ?? ''}
                     onChange={ handleChange }
                     name='unidad'
                     label='Unidad/Dirección'
