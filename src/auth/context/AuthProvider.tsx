@@ -1,4 +1,6 @@
-import React, { useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
+import { URLSContext } from '../../context/URLs.context'
+import { FetchRequest } from '../../utils/MakeRequest'
 import { AuthAction, AuthActionsKind } from '../models/enums'
 import { Auth, User } from '../models/usert'
 import { loginService } from '../services/login'
@@ -14,27 +16,53 @@ type AuthProviderProps = {
     children : JSX.Element
 }
 
-const initSesion = () : Auth => {
+const initSesion = () :Auth => {
 
-    localStorage.getItem('user');
+    try {
+    
+        localStorage.getItem('user');
+    
+        const user = JSON.parse( localStorage.getItem('user') ?? 'null' ) ?? undefined;
+    
+        // TODO: Verificar que el usuario tenga estructura correcta
 
-    const user = JSON.parse( localStorage.getItem('user') ?? 'null' ) ?? undefined;
 
-    // TODO: Verificar que el usuario tenga estructura correcta
-    //TODO: Verificar que el token no haya expirado
+        return {
+            logged: !!user,
+            user: user
+        }
 
-
-    return {
-        logged: !!user,
-        user: user
     }
-
+    catch ( error: any ){
+        return {
+            logged: false,
+            user: undefined                
+        }
+    }
 }
+
 
 export const AuthProvider : React.FC<AuthProviderProps> = ({children}) => {
 
+    const { auth } = useContext( URLSContext )
+    
     const [ authState, dispatch ] = useReducer( authReducer, initialState, initSesion )
 
+
+    const verificacionToken = async () => {
+
+        try{
+            // Verificar que el token no haya expirado
+            await FetchRequest(`${ auth }/validarsesion`, 'GET', undefined)
+        }
+        catch( error ){
+            logout()
+        }
+    }
+
+    useEffect(() => {
+        verificacionToken()
+    }, [])
 
     const login = async ( url: string, user : string, pw : string) : Promise<string> => {
 
@@ -64,6 +92,7 @@ export const AuthProvider : React.FC<AuthProviderProps> = ({children}) => {
 
         // Grabar el usuario en el local storage
         window.localStorage.setItem( 'user', JSON.stringify( userInfo ) )
+        window.localStorage.setItem( 'sesion-jwt', respUser.token )
 
         return '';
 
@@ -81,8 +110,9 @@ export const AuthProvider : React.FC<AuthProviderProps> = ({children}) => {
         // Disparar el cambio
         dispatch( action )
 
-        // Grabar el usuario en el local storage
+        // Quitar el usuario en el local storage
         window.localStorage.removeItem( 'user' )
+        window.localStorage.removeItem( 'sesion-jwt' )
 
     }
 

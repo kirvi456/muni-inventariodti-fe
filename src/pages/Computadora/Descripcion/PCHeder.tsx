@@ -18,9 +18,9 @@ export const PCHeader : React.FC<{pc: Computadora, url : string}> = ({pc, url}) 
                 <Stack>
 
                     
-                    <Typography fontWeight='bold' textAlign='justify' sx={{ mb: '0.5em' }}>
+                    <Typography fontWeight='bold' textAlign='justify' sx={{ mb: '0.7em' }}>
                         La información que se muestra a continuación corresponde a las características de un 
-                        equipo de tecnológico utilizado por el pesonal de la Municipalidad de San Jose Pinula.
+                        equipo tecnológico utilizado por el pesonal de la Municipalidad de San Jose Pinula.
                         Esta información es de caracter pública y puede ser consultada por cualquier persona en
                         cualquier momento.  
                     </Typography>
@@ -56,7 +56,7 @@ export const PCHeader : React.FC<{pc: Computadora, url : string}> = ({pc, url}) 
                 />
             </Grid>
         </Grid>
-        <Divider />
+        <Divider sx={{mt:2}}/>
         </Stack>
     )
 }

@@ -1,4 +1,4 @@
-import { AuthAction, AuthActionsKind, AuthState } from "../models/enums";
+import { AuthAction, AuthActionsKind } from "../models/enums";
 import { Auth } from "../models/usert";
 
 

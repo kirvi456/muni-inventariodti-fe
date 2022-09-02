@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Stack, Typography, Button } from '@mui/material'
 import React, { useState } from 'react'
 import { useNotification } from '../../../hooks/useNotification'
 import { Computadora } from '../../../models/Computadora'
@@ -8,10 +8,11 @@ import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 type FormularioGuardarProps = {
-    equipo : Computadora
+    equipo : Computadora,
+    limpiarComputadora : () => void
 }
 
-export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo }) => {
+export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo, limpiarComputadora }) => {
 
     const [showQR, setShowQR] = useState<boolean>(false);
     const [img, setImg] = useState<string>('');
@@ -36,7 +37,7 @@ export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo })
 
 
         if( !resultImg.payload || resultImg.payload === '' ){
-            openErrorNotification( '[Error]: No se generó el QR, pruebe generandolo luego.' );
+            openErrorNotification( '[Error]: No se generó el QR, pruebe generarlo luego.' );
             setLoading( false );
             return;
         }
@@ -62,6 +63,9 @@ export const FormularioGuardar : React.FC<FormularioGuardarProps> = ({ equipo })
             <Typography textAlign='center'>
                 Guarde la imagen haciendo click derecho sobre ella.
             </Typography>
+            <Button
+                onClick={limpiarComputadora}
+            >Aceptar</Button>
         </Stack>
     )
 

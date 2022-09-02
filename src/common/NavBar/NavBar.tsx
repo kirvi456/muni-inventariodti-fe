@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { Box, AppBar, Toolbar, IconButton, Grid, Avatar, Typography, Stack } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../auth';
 import { URLSContext } from '../../context/URLs.context';

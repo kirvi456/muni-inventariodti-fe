@@ -25,7 +25,7 @@ export const NotFound = () => {
                     alt='Equipo no encontrado SVG'
                     style={{
                         width: '400px',
-                        maxWidth: '70%'
+                        maxWidth: '50%'
                     }}
                 />           
 

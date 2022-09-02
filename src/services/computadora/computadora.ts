@@ -19,7 +19,7 @@ export const saveComputadora = async (pc : Computadora) : Promise<BasicResponse<
 
 export const getQR = async ( id : string ) : Promise<BasicResponse<string>> => {
     try{
-        const compu = await FetchRequestImg<string>( `${ process.env.REACT_APP_BASE_URL }api/PCS/codebar/${ id }`,'GET', undefined );
+        const compu = await FetchRequestImg( `${ process.env.REACT_APP_BASE_URL }api/PCS/codebar/${ id }`,'GET', undefined );
         
 
         return { response: true, message: 'Computadora guardada.', payload: compu.data };

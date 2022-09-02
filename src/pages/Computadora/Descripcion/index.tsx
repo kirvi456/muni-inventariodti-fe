@@ -6,7 +6,7 @@ import { PCEtiqueta } from './PCEtiqueta';
 import { PCOptionShow } from './PCOptionShow';
 import { InformacionGeneral } from './InformacionGeneral';
 import { ActividadesList } from './ActividadesList';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useFetch from '../../../hooks/useFetch';
 import { URLSContext } from '../../../context/URLs.context';
 import { NotFound } from './NotFound';

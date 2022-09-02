@@ -15,6 +15,7 @@ export const FetchRequest = <T = unknown> (
 
         const token = window.localStorage.getItem('sesion-jwt') ?? '';
 
+        
         const headers : HeadersInit = {
             'Content-Type': 'application/json',
             Accept: 'application/json, text/javascript, */*;',
@@ -59,7 +60,7 @@ export const FetchRequest = <T = unknown> (
 
 
 
-export const FetchRequestImg = <T = unknown> (
+export const FetchRequestImg = (
     url : string, 
     method : 'GET' | 'POST' | 'PUT' | 'DELETE', 
     body : any

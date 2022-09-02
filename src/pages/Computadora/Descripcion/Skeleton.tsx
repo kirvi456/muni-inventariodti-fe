@@ -7,7 +7,6 @@ export const EquipoSkeleton = () => {
             <Stack alignItems='center'>
                 <Skeleton width='50%' height='4em'></Skeleton>
                 <Skeleton width='45%' height='2em'></Skeleton>
-                <Skeleton></Skeleton>
             </Stack>
             <Grid container sx={{mb: 1}}>
                 <Grid item  xs={12} sm={12} md={12} lg={8} sx={{mt: 2}}>

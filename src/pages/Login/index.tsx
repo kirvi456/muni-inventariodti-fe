@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Box, Paper, Stack, TextField, Button, Container, Typography, Link } from '@mui/material';
+import { Paper, Stack, TextField, Container, Typography, Link } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ValidateLoginForm } from '../../utils/ValidateLoginForm';
 import { URLSContext } from '../../context/URLs.context';
@@ -7,23 +7,27 @@ import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../hooks/useNotification';
 import { PasswordInput } from '../../components/PasswordInput';
 import { AuthContext } from '../../auth';
-
+import LoadingButton from '@mui/lab/LoadingButton';
+import { getErrorMessage } from '../../utils/ErrorMessage';
 
 export const LoginPage : React.FC<{}> = () => {
 
-    const URLS = React.useContext(URLSContext);
-    const navigate = useNavigate();
 
-    const {openErrorNotification} = useNotification();
-
-    const [user, setUser] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [user, setUser]           = useState<string>('');
+    const [password, setPassword]   = useState<string>('');
+    const [loading, setLoading]     = useState<boolean>(false);
 
     const { login } = useContext( AuthContext );
+    const URLS = React.useContext(URLSContext);
+
+    const {openErrorNotification} = useNotification();
+    const navigate = useNavigate();
 
     const loguearse = (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+        setLoading( true );
+
+
         ValidateLoginForm.validate({user, password})
         .then(async () => {
 
@@ -31,13 +35,15 @@ export const LoginPage : React.FC<{}> = () => {
 
             if( loginResponse.length > 0 ) {
                 openErrorNotification( loginResponse );
+                setLoading( false );
                 return;
             }
             
             return navigate('/');
         })
         .catch((error) => {
-            openErrorNotification(error.message);
+            openErrorNotification(getErrorMessage(error));
+            setLoading( false );
         })
     }
 
@@ -51,51 +57,70 @@ export const LoginPage : React.FC<{}> = () => {
                 alignItems: 'center',
             }}
         >
-            <Paper sx={{minWidth: '350px', maxWidth: '350px', p:2}} elevation={12}>
-                <form onSubmit={ loguearse }>
-                    <Stack spacing={3}>
-                        <Box textAlign='center'>
-                            <AccountCircleIcon sx={{fontSize: 70}} />
+            <Paper sx={{minWidth: '350px', width: '350px', maxWidth: '90%', p:2}} elevation={12}>
 
-                        </Box>
-
-                        <Stack spacing={2}>
-                            <TextField 
-                                size='small'
-                                type='text'
-                                value={user}
-                                onChange={(e) => {setUser(e.target.value)}}
-                                label="Usuario" 
-                                variant="outlined" 
-                            /> 
-
-                            <PasswordInput 
-                                value={password}
-                                onChange={(e) => {setPassword(e.target.value)}}
-                                label="Contraseña" 
-                                size='small'
-                            /> 
-
-                            <Stack direction='row' spacing={1}>
-                                <Typography variant='caption'>No tienes cuenta?</Typography>
-                                <Link
-                                    onClick={() => navigate('/registro')}
-                                    variant='caption' 
-                                    sx={{
-                                        cursor: 'pointer'
-                                    }}
-                                >
-                                    Registrate
-                                </Link>
-                            </Stack>
-                        </Stack>
-                        <Button
-                            type='submit'
-                            variant='contained'
-                        >Iniciar Sesión</Button>
+                <Stack spacing={2}>                
+                    <Stack alignItems='center'>
+                        <AccountCircleIcon sx={{fontSize: 70}} />
                     </Stack>
-                </form>
 
+                    <Stack>
+                        <Typography variant='h4' textAlign='center'>
+                            Bienvenido
+                        </Typography>
+
+                        <Typography variant='caption' textAlign='center' sx={{opacity: 0.5}}>
+                            Ingresa con tu email/usuario y tu contraseña
+                        </Typography>
+                    </Stack> 
+
+                    <form onSubmit={ loguearse }>
+                        <Stack spacing={2}>                                            
+
+                            <Stack spacing={2}>
+                                <TextField 
+                                    size='small'
+                                    type='text'
+                                    value={user}
+                                    onChange={(e) => {setUser(e.target.value)}}
+                                    label="Usuario" 
+                                    variant="outlined" 
+                                /> 
+
+                                <PasswordInput 
+                                    value={password}
+                                    onChange={(e) => {setPassword(e.target.value)}}
+                                    label="Contraseña" 
+                                    size='small'
+                                />                             
+                            </Stack>
+
+                            <LoadingButton
+                                type='submit'
+                                loading={ loading }
+                                variant='contained'
+                            >
+                                Iniciar Sesión
+                            </LoadingButton>
+
+                        </Stack>
+                    </form>
+
+                    <Stack direction='row' spacing={1} justifyContent='center'>
+                        <Typography variant='caption'>
+                            ¿No tienes cuenta?
+                        </Typography>
+                        <Link
+                            onClick={() => navigate('/registro')}
+                            variant='caption' 
+                            sx={{
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Registrate
+                        </Link>
+                    </Stack>
+                </Stack>
             </Paper>
         </Container>
     )

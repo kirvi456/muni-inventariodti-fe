@@ -35,12 +35,17 @@ export default function StepperForm() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const limpiarComputadora = () => {
+        setEquipo( emptyComputadora )
+        setActiveStep( 0 )
+    }
+
     return (
     <>
-    <Paper sx={{width: '700px', maxWidth: '90%', margin: 'auto'}} elevation={4}>
+    <Paper sx={{width: '750px', maxWidth: '95%', margin: 'auto'}} elevation={4}>
 
 
-        <Stepper activeStep={activeStep} alternativeLabel sx={{backgroundColor: 'action.selected', padding: '16px 0'}}>
+        <Stepper activeStep={activeStep} alternativeLabel sx={{backgroundColor: 'action.selected', padding: '16px 0', overflowX: 'auto'}}>
             {steps.map((label) => (
             <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -52,7 +57,7 @@ export default function StepperForm() {
                     {activeStep === 0 && <FormularioPersona equipo={equipo} setEquipo={setEquipo} />}                
                     {activeStep === 1 && <FormularioEquipo equipo={equipo} setEquipo={setEquipo} />}                
                     {activeStep === 2 && <FormularioRed equipo={equipo} setEquipo={setEquipo} />}
-                    {activeStep === 3 && <FormularioGuardar equipo={equipo} />}
+                    {activeStep === 3 && <FormularioGuardar equipo={equipo} limpiarComputadora={limpiarComputadora} />}
 
                     {
                         activeStep < 3 &&

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Paper, Stack, TextField, Button, Container, Typography, Link } from '@mui/material';
+import { Paper, Stack, TextField, Container, Typography, Link } from '@mui/material';
 
 import { emptyUsuario, Usuario } from '../../models/Usuario';
 import { useNotification } from '../../hooks/useNotification';
@@ -8,10 +8,14 @@ import { URLSContext } from '../../context/URLs.context';
 import { FetchRequest } from '../../utils/MakeRequest';
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput } from '../../components/PasswordInput';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { getErrorMessage } from '../../utils/ErrorMessage';
+
 
 export const RegistrarPage = () => {
-    const [user, setUser] = useState<Usuario>({...emptyUsuario, rol: 'ADMIN'});
-    const [pwConfirmation, setPwConfirmation] = useState<string>('');
+    const [user, setUser]                       = useState<Usuario>({...emptyUsuario, rol: 'ADMIN'});
+    const [pwConfirmation, setPwConfirmation]   = useState<string>('');
+    const [loading, setLoading]                 = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -25,7 +29,10 @@ export const RegistrarPage = () => {
         setUser({...user});
     }
 
-    const Registrar = () => {
+    const Registrar = (e : React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading( true );
+
         ValidateRegistroForm.validate({...user, pwConfirmation})
         .then(async () => {
             const usuario = await FetchRequest<Usuario>(
@@ -33,18 +40,22 @@ export const RegistrarPage = () => {
                 'POST',
                 user                
             )
-
+            
             if(usuario.error){
                 openErrorNotification(usuario.error.message);
+                setLoading( false );
                 return;
             }
             openSuccessNotification('Usuario registrado');
 
             setUser({...emptyUsuario, rol: 'ADMIN'});
             setPwConfirmation('');
+            setLoading( false );
         })
         .catch(error => {
-            openErrorNotification(error.message);
+            console.log(error)
+            openErrorNotification(getErrorMessage(error));
+            setLoading( false );
         })
 
     }
@@ -59,73 +70,84 @@ export const RegistrarPage = () => {
                 alignItems: 'center',
             }}
         >
-            <Paper sx={{minWidth: '400px', maxWidth: '400px', p:2}} elevation={12}>
-                <Stack spacing={3}>
+            <Paper sx={{minWidth: '350px', width: '350px', maxWidth: '90%', p:2}} elevation={12}>
+                <Stack spacing={2}>
 
-                    <Typography variant='h6' textAlign='center'>
-                        Registro Usuario
+                    <Typography variant='h4' textAlign='center'>
+                        Crea un cuenta
                     </Typography>
 
-                    <Stack spacing={2}>
+                    <form onSubmit={ Registrar }>                    
+                        <Stack spacing={2}>
 
-                        <TextField 
-                            size='small'
-                            type='text'
-                            value={user.nombre}
-                            name='nombre'
-                            onChange={ hangleInputChange }
-                            label="Nombre Completo" 
-                            variant="outlined" 
-                        /> 
+                            <TextField 
+                                size='small'
+                                type='text'
+                                value={user.nombre}
+                                name='nombre'
+                                onChange={ hangleInputChange }
+                                label="Nombre Completo" 
+                                variant="outlined" 
+                            /> 
 
-                        <TextField 
-                            size='small'
-                            type='email'
-                            value={user.correo}
-                            name='correo'
-                            onChange={ hangleInputChange }
-                            label="Correo" 
-                            variant="outlined" 
-                        /> 
+                            <TextField 
+                                size='small'
+                                type='email'
+                                value={user.correo}
+                                name='correo'
+                                onChange={ hangleInputChange }
+                                label="Correo" 
+                                variant="outlined" 
+                            /> 
 
-                        <TextField 
-                            size='small'
-                            type='text'
-                            value={user.usuario}
-                            name='usuario'
-                            onChange={ hangleInputChange }
-                            label="Usuario" 
-                            variant="outlined" 
-                        /> 
-                        
-                        <PasswordInput 
-                            name='pw'
-                            value={user.pw}
-                            onChange={ hangleInputChange }
-                            label="Confirmar Contraseña" 
-                            size='small'
-                        /> 
+                            <TextField 
+                                size='small'
+                                type='text'
+                                value={user.usuario}
+                                name='usuario'
+                                onChange={ hangleInputChange }
+                                label="Usuario" 
+                                variant="outlined" 
+                            /> 
+                            
+                            <PasswordInput 
+                                name='pw'
+                                value={user.pw}
+                                onChange={ hangleInputChange }
+                                label="Confirmar Contraseña" 
+                                size='small'
+                            /> 
 
-                        <PasswordInput 
-                            value={pwConfirmation}
-                            onChange={ (e) => setPwConfirmation(e.target.value) }
-                            label="Confirmar Contraseña" 
-                            size='small'
-                        /> 
+                            <PasswordInput 
+                                value={pwConfirmation}
+                                onChange={ (e) => setPwConfirmation(e.target.value) }
+                                label="Confirmar Contraseña" 
+                                size='small'
+                            />                         
 
-                    </Stack>
-                    <Stack spacing={1}>
-                        <Button
-                            variant='contained'
-                            onClick={ Registrar }
-                        >Registrar</Button>
+                            <LoadingButton
+                                type='submit'
+                                variant='contained'
+                                loading={loading}
+                            >
+                                Registrar
+                            </LoadingButton>
+
+                        </Stack>
+                    </form>
+                    
+                    <Stack direction='row' spacing={1} justifyContent='center'>
+                        <Typography variant='caption'>
+                            ¿Ya eres usuario?
+                        </Typography>
                         <Link 
                             variant='caption' 
                             textAlign='center' 
                             sx={{cursor: 'pointer'}}
                             onClick={() => navigate('/login')}
-                        >Ir a Login</Link>
+                        >Ingresa</Link>
                     </Stack>
+
                 </Stack>
 
             </Paper>

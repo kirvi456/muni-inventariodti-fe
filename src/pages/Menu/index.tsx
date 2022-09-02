@@ -32,7 +32,7 @@ export const MenuPage : React.FC<{}> = () => {
                     <MenuCard  
                         title='EDITAR COMPUTADORA' 
                         icon='computer'
-                        path='/computadora/editar'
+                        path='/computadora/actualizar'
                     />
                 </Grid>
                 
