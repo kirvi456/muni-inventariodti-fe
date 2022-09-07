@@ -30,19 +30,12 @@ export const MenuPage : React.FC<{}> = () => {
                 
                 <Grid item>
                     <MenuCard  
-                        title='EDITAR COMPUTADORA' 
+                        title='ADMINISTRAR COMPUTADORAS' 
                         icon='computer'
-                        path='/computadora/actualizar'
+                        path='/computadoras'
                     />
-                </Grid>
+                </Grid>               
                 
-                <Grid item>
-                    <MenuCard  
-                        title='REPORTES COMPUTADORA' 
-                        icon='computer'
-                        path='/computadora/repotes'
-                    />
-                </Grid>
 
                 {/* ----------- IMPRESORAS ----------- */}
                 <Grid item>
@@ -55,17 +48,9 @@ export const MenuPage : React.FC<{}> = () => {
                 
                 <Grid item>
                     <MenuCard  
-                        title='EDITAR IMPRESORA' 
+                        title='ADMINISTARAR IMPRESORAS' 
                         icon='printer'
                         path='/impresora/editar'
-                    />
-                </Grid>
-                
-                <Grid item>
-                    <MenuCard  
-                        title='REPORTES IMPRESORA' 
-                        icon='printer'
-                        path='/impresora/repotes'
                     />
                 </Grid>
 

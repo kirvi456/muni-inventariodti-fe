@@ -28,13 +28,23 @@ export const SedesSelect = (props : TextFieldProps) => {
         
     }, [URLS.sedes])
     
-    
+    const sedeOnItems = ( ) : string => {
+
+        if ( items.length === 0 ) return ''
+
+        const currentValue = typeof(props.value) === 'string' ? props.value : '';
+
+        return items.filter( el => {
+            return el._id === currentValue
+        }).length > 0 ? currentValue : '';
+
+    }
 
     return (
         <TextField
             select={items.length > 0}
-            value = {props.value || ''}
             {...props}
+            value = { sedeOnItems() }
         >
             {
                 items.map( sede => (

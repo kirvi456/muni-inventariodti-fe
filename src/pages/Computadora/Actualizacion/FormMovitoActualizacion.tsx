@@ -1,23 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Typography, Paper, TextField, Stack, Divider } from '@mui/material'
+import { Actualizacion } from '../../../models/Actualizacion'
 
-type Motivo = {
-    nombreComponente: string,
-    descAnterior: string,
-    descNuevo: string,
-    motivo: string
+type FormMovitoActualizacionProps  = {
+    motivo: Actualizacion,
+    setMotivo: React.Dispatch<React.SetStateAction<Actualizacion>>
 }
 
-const emptyMotivo : Motivo = {
-    nombreComponente: '',
-    descAnterior: '',
-    descNuevo: '',
-    motivo: ''
-}
+export const FormMovitoActualizacion : React.FC<FormMovitoActualizacionProps> = ({ motivo, setMotivo }) => {
 
-export const FormMovitoActualizacion = () => {
-
-    const [ motivo, setMotivo ] = useState<Motivo>(emptyMotivo)
 
     const handleMotivoChange = ( e : React.ChangeEvent<HTMLInputElement> ) => {
         motivo[e.target.name as 'motivo'] = e.target.value;

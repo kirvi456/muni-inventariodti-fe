@@ -9,6 +9,8 @@ import { RegistrarPCPage } from './pages/Computadora/Registrar';
 import { LoginPage } from './pages/Login';
 import { MenuPage } from './pages/Menu';
 import { RegistrarPage } from './pages/Registrar';
+import { QRPCPage } from './pages/Computadora/QR';
+import { ReporteResponsabilidadPage } from './pages/Computadora/Reportes/Responsabilidad';
 
 
 export const AppRouter : React.FC<{}> = () => {
@@ -20,6 +22,8 @@ export const AppRouter : React.FC<{}> = () => {
                 <Route path='/computadoras' element={<BuscadorPC />} />
                 <Route path='/computadora/actualizar' element={<ActualizacionPage />} />
                 <Route path='/computadora/registrar' element={<RegistrarPCPage />} />
+                <Route path='/computadora/responsabilidad-reporte' element={<ReporteResponsabilidadPage />} />
+                <Route path='/computadora/qr' element={<QRPCPage />} />
             </Route>
 
             <Route path='/' element={<NoAuthLayout />}>

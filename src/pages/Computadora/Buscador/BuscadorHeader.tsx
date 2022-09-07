@@ -2,19 +2,31 @@ import React, { useState } from 'react'
 import { Button, Stack } from '@mui/material'
 import { SedesSelect } from '../Registrar/SedesSelect';
 import { UnidadesSelect } from '../Registrar/UnidadesSelect';
+import { useNavigate } from 'react-router-dom';
 
 type BuscadorHeaderProps = {
-    sede: string,
-    unidad: string,
-    handleSedeChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    handleUnidadChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    handleBusqueda: () => void
+    sedeID: string,
+    unidadID: string
 }
 
+export const BuscadorHeader : React.FC<BuscadorHeaderProps> = React.memo( ({ sedeID, unidadID }) => {
 
-export const BuscadorHeader : React.FC<BuscadorHeaderProps> = ({sede, unidad, handleSedeChange, handleUnidadChange, handleBusqueda}) => {
+    const navigate = useNavigate();
 
-    
+    const [ sede, setSede ] = useState<string>(sedeID);
+    const [ unidad, setUnidad ] = useState<string>(unidadID);
+
+    const handleSedeChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setSede(e.target.value)
+    }
+
+    const handleUnidadChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setUnidad(e.target.value)
+    }
+
+    const handleBusqueda = () => {
+        navigate(`/computadoras?sedeID=${sede}&unidadID=${unidad}`, { replace: true })
+    }
 
     return (
         <Stack spacing={2}>
@@ -44,4 +56,4 @@ export const BuscadorHeader : React.FC<BuscadorHeaderProps> = ({sede, unidad, ha
             </Button>
         </Stack>
     )
-}
+})

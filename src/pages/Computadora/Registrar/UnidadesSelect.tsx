@@ -27,12 +27,25 @@ export const UnidadesSelect = (props : TextFieldProps) => {
 
         
     }, [URLS.unidades])
-    
+
+
+    const sedeOnItems = ( ) : string => {
+
+        if ( items.length === 0 ) return ''
+
+        const currentValue = typeof(props.value) === 'string' ? props.value : '';
+
+        return items.filter( el => {
+            return el._id === currentValue
+        }).length > 0 ? currentValue : '';
+
+    }
 
     return (
         <TextField
             select={ items.length > 0}
             {...props}
+            value = { sedeOnItems() }
         >
             {
                 items.map( unidad => (

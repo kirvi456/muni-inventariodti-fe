@@ -1,10 +1,14 @@
-import React from 'react'
-import { Stack, Paper, Button, Grid} from '@mui/material'
+import React, { useState } from 'react'
+import { Stack, Paper } from '@mui/material'
 import { Computadora } from '../../../models/Computadora';
 import { FormularioPersona } from '../Registrar/FormularioPersona';
 import { FormularioEquipo } from '../Registrar/FormularioEquipo';
 import { FormularioRed } from '../Registrar/FormularioRed';
 import { FormMovitoActualizacion } from './FormMovitoActualizacion';
+import { LoadingButton } from '@mui/lab';
+import { updateComputadora } from '../../../services/computadora/computadora';
+import { useNotification } from '../../../hooks/useNotification';
+import { Actualizacion, emptyActualizacion } from '../../../models/Actualizacion';
 
 type ActualizacionFormProps = {
     equipo : Computadora, 
@@ -12,6 +16,30 @@ type ActualizacionFormProps = {
 }
 
 export const ActualizacionForm : React.FC<ActualizacionFormProps> = ({equipo, setEquipo}) => {
+    
+    const [ loading, setLoading ] = useState<boolean>(false)
+    const [ motivo, setMotivo ] = useState<Actualizacion>( emptyActualizacion )
+
+
+    const { openErrorNotification, openSuccessNotification } = useNotification();
+    
+    const guardarPC = async () => {
+
+        setLoading(true);
+
+
+        const pc = await updateComputadora( equipo, motivo );
+
+        if( !pc.response ){
+            openErrorNotification( pc.message! );
+            setLoading( false );
+            return ;
+        }
+
+        openSuccessNotification('Computadora registrada');
+        
+        setLoading( false );
+    }
 
     return (
         <Stack spacing={2}  sx={{ maxWidth: 'sm', margin: 'auto', mt: 2, mb: 6}}>
@@ -37,11 +65,16 @@ export const ActualizacionForm : React.FC<ActualizacionFormProps> = ({equipo, se
                 />
             </Paper>
 
-            <FormMovitoActualizacion />
+            <FormMovitoActualizacion motivo={motivo} setMotivo={setMotivo} />
 
-            <Button variant='contained' fullWidth>
+            <LoadingButton 
+                variant='contained' 
+                fullWidth 
+                loading={ loading }
+                onClick={ guardarPC }
+            > 
                 Actualizar
-            </Button>
+            </LoadingButton>
 
         </Stack>
     )
